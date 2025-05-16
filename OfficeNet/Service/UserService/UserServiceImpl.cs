@@ -310,7 +310,9 @@ namespace OfficeNet.Service.UserService
                         FirstName = u.FirstName,
                         LastName = u.LastName,
                         Gender = u.Gender,
-                        EmpCode = u.EmpCode
+                        EmpCode = u.EmpCode,
+                        Email = u.Email,
+                        Id = Guid.Parse(u.Id)
                     }).ToList();
                 }
 

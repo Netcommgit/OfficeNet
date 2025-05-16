@@ -10,6 +10,13 @@ using OfficeNet.Service.TokenService;
 using OfficeNet.Service.UserService;
 using OfficeNet.Service;
 using OfficeNet.Service.Roles;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using OfficeNet.Domain.Contracts;
+using OfficeNet.Service.Survey;
+using OfficeNet.Filters;
+using OfficeNet.Service.PlantService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,19 +89,19 @@ builder.Services.AddScoped<IUserService, UserServiceImpl>();
 builder.Services.AddScoped<ITokenService, TokenServiceImple>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IRoleService, RoleImple>();
+builder.Services.AddScoped<ISurveyDetailsService, SurveyDetailsImple>();
+builder.Services.AddScoped<IPlantsMasterService,PlantMasterService>();
+//builder.Services.AddScoped<SetUserContextFilter>();
 
+//builder.Services.AddControllers(options =>
+//{
+//    options.Filters.Add<SetUserContextFilter>();  // Apply globally
+//});
 
 // Regsitering AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAngularApp",
-//        builder => builder
-//            .WithOrigins("http://localhost:4500") // your frontend URL
-//            .AllowAnyHeader()
-//            .AllowAnyMethod());
-//});
+
 
 
 // Adding Jwt from extension method
@@ -113,6 +120,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
@@ -120,10 +129,10 @@ app.UseRouting();
 app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.UseExceptionHandler();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

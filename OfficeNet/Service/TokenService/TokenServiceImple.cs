@@ -63,7 +63,7 @@ namespace OfficeNet.Service.TokenService
                 issuer: _validIssuer,
                 audience: _validAudience,
                 claims: claims,
-                expires: DateTime.Now.AddSeconds(_expires),
+                expires: DateTime.UtcNow.AddSeconds(_expires),
                 signingCredentials:signingCredentials
             );
         }

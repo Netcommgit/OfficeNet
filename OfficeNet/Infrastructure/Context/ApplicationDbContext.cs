@@ -9,6 +9,8 @@ namespace OfficeNet.Infrastructure.Context
         : IdentityDbContext<ApplicationUser>
         (options)
     {
+        public DbSet<SurveyDetails> SurveyDetail { get; set; }
+        public DbSet<Plant> Plants { get;set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -10,18 +10,6 @@ namespace OfficeNet.Extensions
 {
     public static partial class ApplicationService
     {
-        //public static void ConfigureCors(this IServiceCollection services)
-        //{
-        //    services.AddCors(options =>
-        //    {
-        //        options.AddPolicy("AllowAngularApp", builder =>
-        //        {
-        //            builder.WithOrigins("*")
-        //                .AllowAnyMethod()
-        //                .AllowAnyHeader();
-        //        });
-        //    });
-        //}
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -71,7 +59,8 @@ namespace OfficeNet.Extensions
                     ValidIssuer = jwtSettings.ValidIssuer,
                     ValidAudience = jwtSettings.ValidAudience,
                     IssuerSigningKey = secretKey,
-                    RoleClaimType = ClaimTypes.Role //Today Added by Ashish 5 may 2025
+                    RoleClaimType = ClaimTypes.Role, //Today Added by Ashish 5 may 2025
+                    ClockSkew = TimeSpan.Zero   // Added by Ashish 06 May for time Checking
                 };
                 o.Events = new JwtBearerEvents
                 {
