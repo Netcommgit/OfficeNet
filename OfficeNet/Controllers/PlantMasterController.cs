@@ -30,9 +30,12 @@ namespace OfficeNet.Controllers
 
             try
             {
-                plant.CreatedBy = _currentUserService.GetUserId();
-                plant.ModifiedBy = _currentUserService.GetUserId(); 
-                plant.CreatedOn  =  DateTime.UtcNow;
+                if (plant.PlantId == 0 || plant.PlantId == null)
+                {
+                    plant.CreatedBy = _currentUserService.GetUserId();
+                    plant.CreatedOn = DateTime.UtcNow;
+                }
+                plant.ModifiedBy = _currentUserService.GetUserId();
                 plant.ModifiedOn = DateTime.UtcNow;
                 var result = await _plantService.SavePlantAsync(plant);
                 return Ok(result); 

@@ -56,18 +56,43 @@ namespace OfficeNet.Service.PlantService
         {
             if (objPlant == null)
                 throw new ArgumentNullException(nameof(objPlant));
-            try
+            if(objPlant.PlantId !=0 && objPlant.PlantId != null)
             {
-                _context.Plants.Add(objPlant);
+                var existingPlant = await _context.Plants.FindAsync(objPlant.PlantId);
+                if (existingPlant == null)
+                {
+                    _logger.LogWarning($"Plant with ID {objPlant.PlantId} not found.");
+                    return null; 
+                }
+
+                existingPlant.PlantName = objPlant.PlantName;
+                existingPlant.SAPCode = objPlant.SAPCode;
+                existingPlant.Status = objPlant.Status;
+                existingPlant.PlantDescription = objPlant.PlantDescription;
+                existingPlant.ModifiedBy = objPlant.ModifiedBy;
+                existingPlant.ModifiedOn = objPlant.ModifiedOn;
                 await _context.SaveChangesAsync();
-                _logger.LogInformation("Plant Saved successfully");
-                return objPlant;
+                _logger.LogInformation($"Plant with ID {objPlant.PlantId} updated successfully.");
+
+                return existingPlant;
+
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError("An error occurred while saving the plant.", ex);
-                throw new Exception("An error occurred while saving the plant.", ex);
+                try
+                {
+                    _context.Plants.Add(objPlant);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation("Plant Saved successfully");
+                    return objPlant;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("An error occurred while saving the plant.", ex);
+                    throw new Exception("An error occurred while saving the plant.", ex);
+                }
             }
+                
         }
 
 
