@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using OfficeNet.Domain.Entities;
 using OfficeNet.Infrastructure.Context;
 
@@ -16,17 +17,24 @@ namespace OfficeNet.Service.PlantService
         }
         public async Task<bool> DeletePlantAsync(int plantId)
         {
-            var plant = await _context.Plants.FindAsync(plantId);
-
-            if (plant == null)
+            try
             {
-                return false; 
+                var plant = await _context.Plants.FindAsync(plantId);
+
+                if (plant == null)
+                {
+                    return false;
+                }
+
+                _context.Plants.Remove(plant);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Data Deleted Successfully");
+                return true;
             }
-
-            _context.Plants.Remove(plant);
-            await _context.SaveChangesAsync();
-
-            return true;
+            catch (Exception ex) {
+                _logger.LogError("Some Error Occured ");
+                throw new Exception($"Some error occurred: {ex.Message}", ex);
+            }
         }
 
         public Task DeletePlantByNameAsync(string plantName)
