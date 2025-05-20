@@ -14,9 +14,19 @@ namespace OfficeNet.Service.PlantService
             _context = context;
             _logger = logger;
         }
-        public Task DeletePlantAsync(int plantId)
+        public async Task<bool> DeletePlantAsync(int plantId)
         {
-            throw new NotImplementedException();
+            var plant = await _context.Plants.FindAsync(plantId);
+
+            if (plant == null)
+            {
+                return false; 
+            }
+
+            _context.Plants.Remove(plant);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public Task DeletePlantByNameAsync(string plantName)
@@ -100,5 +110,7 @@ namespace OfficeNet.Service.PlantService
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

@@ -53,5 +53,12 @@ namespace OfficeNet.Controllers
             var result = await _plantService.GetPlantListAsync();
             return Ok(result);
         }
+        [HttpDelete("DeletePlant/{plantId}")]
+        [Authorize]
+        public async Task<IActionResult> DeletaPlantAsync(int plantId)
+        {
+            var result = await  _plantService.DeletePlantAsync(plantId);
+            return Ok(result);
+        }
     }
 }

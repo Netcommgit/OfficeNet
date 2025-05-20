@@ -8,7 +8,7 @@ namespace OfficeNet.Service.PlantService
         Task<Plant> GetPlantByIdAsync(Plant plantId);
         Task<Plant> SavePlantAsync(Plant objPlant);
         Task<Plant> GetPlantByNameAsync(Plant plantName);
-        Task DeletePlantAsync(int plantId);
+        Task<bool> DeletePlantAsync(int plantId);
         Task DeletePlantByNameAsync(string plantName);
         Task <Plant>UpdatePlantAsync(Plant objPlant);
     }
