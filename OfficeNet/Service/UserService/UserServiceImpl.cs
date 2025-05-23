@@ -312,6 +312,7 @@ namespace OfficeNet.Service.UserService
                         Gender = u.Gender,
                         EmpCode = u.EmpCode,
                         Email = u.Email,
+                        Status = u.Status,
                         Id = Guid.Parse(u.Id)
                     }).ToList();
                 }

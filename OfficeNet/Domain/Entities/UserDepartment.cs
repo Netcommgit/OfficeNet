@@ -12,13 +12,8 @@ namespace OfficeNet.Domain.Entities
         [Required]
         [MaxLength(100)]
         public string DeptName { get; set; }
-
-        public DateTime? ModifyDate { get; set; }
-
         public bool Status { get; set; }
-
         public bool? Archive { get; set; }
-
         [MaxLength(40)]
         public string? SAPCode { get; set; }
 

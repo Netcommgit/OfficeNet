@@ -17,6 +17,7 @@ using OfficeNet.Domain.Contracts;
 using OfficeNet.Service.Survey;
 using OfficeNet.Filters;
 using OfficeNet.Service.PlantService;
+using OfficeNet.Service.Department;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +92,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IRoleService, RoleImple>();
 builder.Services.AddScoped<ISurveyDetailsService, SurveyDetailsImple>();
 builder.Services.AddScoped<IPlantsMasterService,PlantMasterService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 //builder.Services.AddScoped<SetUserContextFilter>();
 
 //builder.Services.AddControllers(options =>
