@@ -16,6 +16,8 @@ namespace OfficeNet.Service.Survey
             _logger = logger;
             _context = context;
         }
+
+       
         public async Task<SurveyDetails> SaveSurveyDetailsAsync(SurveyDetails surveyDetails)
         {
             try
@@ -32,6 +34,11 @@ namespace OfficeNet.Service.Survey
                 _logger.LogError($"Failed to Save Survey :{errors}", errors);
                 throw new Exception($"Failed to save Survey :{errors}");
             }
+        }
+
+        public Task<SurveyAuthenticateUser> CreateSurveyAuthenticateUserAsync(SurveyAuthenticateUser surveyAuthenticateUser)
+        {
+            throw new NotImplementedException();
         }
     }
 }

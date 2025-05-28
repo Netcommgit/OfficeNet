@@ -35,6 +35,10 @@ namespace OfficeNet.Controllers
                 return BadRequest();
             }
             var result =  await _surveyDetailsService.SaveSurveyDetailsAsync(surveyDetails);
+            //if(result.SurveyId > 0)
+            //{
+            //    surveyAuthenticateUser.SurveyId = result.SurveyId;
+            //}
             return Ok(result);
         }
     }
