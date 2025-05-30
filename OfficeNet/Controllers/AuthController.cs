@@ -40,12 +40,31 @@ namespace OfficeNet.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var response = await _userService.LoginAsync(request);
-            //return Ok(response);
-            var exp = DateTime.Now.AddMinutes(2);
-            long expUnixTimestamp = ((DateTimeOffset)exp).ToUnixTimeSeconds();
-            return Ok(new {id =  response.Id,email = response.Email,name = response.FirstName+ " "+ response.LastName, access_token = response.AccessToken, exp = expUnixTimestamp, expires_in = expUnixTimestamp, refresh_token = response.RefreshToken });
-            //return Ok(new {access_token = response.AccessToken, exp = expUnixTimestamp, expires_in = expUnixTimestamp, refresh_token = response.RefreshToken });
+            try
+            {
+                var response = await _userService.LoginAsync(request);
+                //return Ok(response);
+                var exp = DateTime.Now.AddMinutes(2);
+                long expUnixTimestamp = ((DateTimeOffset)exp).ToUnixTimeSeconds();
+                return Ok(new { id = response.Id, email = response.Email, name = response.FirstName + " " + response.LastName, access_token = response.AccessToken, exp = expUnixTimestamp, expires_in = expUnixTimestamp, refresh_token = response.RefreshToken });
+            }
+            catch (UnauthorizedAccessException ex) {
+                return Ok(new
+                {
+                    title = "Unauthorized",
+                    message = ex.Message,
+                    statusCode = 401
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    title = "Internal Server Error",
+                    message = ex.Message,
+                    statusCode = 500
+                });
+            }
         }
 
         [HttpGet("user/{id}")]

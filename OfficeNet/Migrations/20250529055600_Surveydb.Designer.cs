@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OfficeNet.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using OfficeNet.Infrastructure.Context;
 namespace OfficeNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250529055600_Surveydb")]
+    partial class Surveydb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,86 +571,12 @@ namespace OfficeNet.Migrations
                     b.Property<bool>("SurveyStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SurveyView")
-                        .HasColumnType("int");
+                    b.Property<bool>("SurveyView")
+                        .HasColumnType("bit");
 
                     b.HasKey("SurveyId");
 
                     b.ToTable("SurveyDetail");
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Entities.SurveyOption", b =>
-                {
-                    b.Property<int>("OptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OptionId"));
-
-                    b.Property<bool?>("Archive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OptionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OptionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("OptionId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("SurveyOptions");
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Entities.SurveyQuestion", b =>
-                {
-                    b.Property<int>("QuestionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuestionId"));
-
-                    b.Property<bool?>("Archieve")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("QuestionErrorMsg")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("QuestionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("QuestionRequierd")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("QuestionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("QuestionType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuestionViewReport")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuestionId");
-
-                    b.HasIndex("SurveyId");
-
-                    b.ToTable("SurveyQuestions");
                 });
 
             modelBuilder.Entity("OfficeNet.Domain.Entities.UsersDepartment", b =>
@@ -742,24 +671,6 @@ namespace OfficeNet.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Entities.SurveyOption", b =>
-                {
-                    b.HasOne("OfficeNet.Domain.Entities.SurveyQuestion", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId");
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Entities.SurveyQuestion", b =>
-                {
-                    b.HasOne("OfficeNet.Domain.Entities.SurveyDetails", "Survey")
-                        .WithMany()
-                        .HasForeignKey("SurveyId");
-
-                    b.Navigation("Survey");
                 });
 #pragma warning restore 612, 618
         }

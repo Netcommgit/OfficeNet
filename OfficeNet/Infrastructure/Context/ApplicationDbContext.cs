@@ -13,6 +13,9 @@ namespace OfficeNet.Infrastructure.Context
         public DbSet<Plant> Plants { get;set; }
         public DbSet<UsersDepartment> UsersDepartments { get; set; }
         public DbSet<SurveyAuthenticateUser> SurveyAuthenticateUsers { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+        public DbSet<SurveyOption> SurveyOptions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

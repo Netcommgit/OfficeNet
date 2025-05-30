@@ -23,23 +23,53 @@ namespace OfficeNet.Controllers
 
         [HttpPost("Save")]
         [Authorize]
-        public async Task<IActionResult> SaveSurveyAsync(SurveyDetails surveyDetails)
+        public async Task<IActionResult> SaveSurveyAsync(ServiceSaveRequest surveyData)
         {
-            var userId =  _currentUserService.GetUserId();
-            surveyDetails.CreatedBy = userId;
-            surveyDetails.ModifiedBy = userId;
-            surveyDetails.CreatedOn = DateTime.Now;
-            surveyDetails.ModifiedOn = DateTime.Now;
-            if (surveyDetails == null)
+            try
             {
-                return BadRequest();
+                var surveyDetails = surveyData.SurveyDetails;
+                var userList = surveyData.UserList;
+                var surveyQuestion =  surveyData.surveyQuestion;
+                var questionType = surveyData.questionType;
+
+                var userId = _currentUserService.GetUserId();
+                surveyDetails.CreatedBy = userId;
+                surveyDetails.ModifiedBy = userId;
+                surveyDetails.CreatedOn = DateTime.Now;
+                surveyDetails.ModifiedOn = DateTime.Now;
+                if (surveyDetails == null)
+                {
+                    return BadRequest();
+                }
+                var result = await _surveyDetailsService.SaveSurveyDetailsAsync(surveyDetails, userList, surveyQuestion, questionType);
+                if (result.SurveyId > 0)
+                {
+                    return StatusCode(201, new
+                    {
+                        status = "success",
+                        message = "Survey created.",
+                        //data = result
+                    });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        status = "error",
+                        message = "Survey creation failed.",
+                        //data = result
+                    });
+                }
             }
-            var result =  await _surveyDetailsService.SaveSurveyDetailsAsync(surveyDetails);
-            //if(result.SurveyId > 0)
-            //{
-            //    surveyAuthenticateUser.SurveyId = result.SurveyId;
-            //}
-            return Ok(result);
+            catch(Exception exx)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Message = "An unexpected error occurred while saving the survey.",
+                    Error = exx.Message // you can remove this in production for security reasons
+                });
+            }
+            
         }
     }
 }

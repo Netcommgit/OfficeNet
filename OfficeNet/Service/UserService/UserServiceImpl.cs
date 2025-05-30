@@ -116,16 +116,15 @@ namespace OfficeNet.Service.UserService
             var user = await _userManager.FindByEmailAsync(loginRequest.Email);
             if (user == null)
             {
-                _logger.LogError("Invalid email or password");
-                throw new Exception("Invalid email or password");
-
+                _logger.LogWarning("Invalid email or password");
+                throw  new UnauthorizedAccessException("Invalid email or password");
             }
 
             var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
             if (!isPasswordValid)
             {
-                _logger.LogError("Invalid email or password");
-                throw new Exception("Invalid email or password");
+                _logger.LogWarning("Invalid email or password");
+                throw new UnauthorizedAccessException("Invalid email or password");
             }
 
             var token =  await _tokenService.GenerateToken(user);
