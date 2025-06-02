@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using OfficeNet.Domain.Contracts;
 using OfficeNet.Domain.Entities;
 using OfficeNet.Infrastructure.Context;
@@ -11,20 +14,20 @@ namespace OfficeNet.Service.Survey
     {
         private readonly ILogger<SurveyDetailsImple> _logger;
         private readonly ApplicationDbContext _context;
-        
-        public SurveyDetailsImple(ILogger<SurveyDetailsImple> logger , ApplicationDbContext context)
+
+        public SurveyDetailsImple(ILogger<SurveyDetailsImple> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
-       
+
         public async Task<SurveyDetails> SaveSurveyDetailsAsync(SurveyDetails surveyDetails, List<string> userList, SurveyQuestion surveyQuestion, List<string> questionType)
         {
             try
             {
-                 _context.SurveyDetail.Add(surveyDetails);
-                 await _context.SaveChangesAsync();
+                _context.SurveyDetail.Add(surveyDetails);
+                await _context.SaveChangesAsync();
                 _logger.LogInformation("Survey details saved successfully.");
                 //var authUser = new List<SurveyAuthenticateUser>();
                 if (surveyDetails.SurveyId != null && surveyDetails.SurveyId != 0)
@@ -49,10 +52,10 @@ namespace OfficeNet.Service.Survey
                     {
                         for (int i = 0; i < questionType.Count; i++)
                         {
-                            var surveyOption =  new SurveyOption();
-                            surveyOption.QuestionId =  surveyQuestion.QuestionId;
+                            var surveyOption = new SurveyOption();
+                            surveyOption.QuestionId = surveyQuestion.QuestionId;
                             surveyOption.OptionText = questionType[i];
-                            surveyOption.OptionOrder = i+1;
+                            surveyOption.OptionOrder = i + 1;
                             surveyOption.Status = true;
                             surveyOption.Archive = false;
                             _context.SurveyOptions.Add(surveyOption);
@@ -62,10 +65,11 @@ namespace OfficeNet.Service.Survey
                     }
 
                 }
-               
+
                 return surveyDetails;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 var errors = ex.Message;
                 _logger.LogError($"Failed to Save Survey :{errors}", errors);
                 throw new Exception($"Failed to save Survey :{errors}");
@@ -75,6 +79,20 @@ namespace OfficeNet.Service.Survey
         public Task<SurveyAuthenticateUser> CreateSurveyAuthenticateUserAsync(SurveyAuthenticateUser surveyAuthenticateUser)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<SurveyList>> GetSurveyListAsync()
+        {
+            try
+            {
+                var result = _context.SurveyListData.FromSqlRaw("EXEC SP_GetSurveyList").ToList();
+                return result;
+            }
+            catch (Exception exx)
+            {
+                _logger.LogError("Some error Occuredd", exx.Message);
+                throw new Exception("Some error Occuredd");
+            }
         }
     }
 }

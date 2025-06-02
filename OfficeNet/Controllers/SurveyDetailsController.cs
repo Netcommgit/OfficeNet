@@ -71,5 +71,39 @@ namespace OfficeNet.Controllers
             }
             
         }
+        [HttpGet("GetSurveyList")]
+        [Authorize]
+        public async Task<IActionResult> GetSurveyList()
+        {
+            try
+            {
+                var result = await _surveyDetailsService.GetSurveyListAsync();
+
+                if (result != null && result.Any())
+                {
+                    return Ok(new
+                    {
+                        status = "success",
+                        message = "Survey list retrieved successfully.",
+                        data = result
+                    });
+                }
+
+                return NotFound(new
+                {
+                    status = "error",
+                    message = "No survey data found."
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    status = "error",
+                    message = "An unexpected error occurred while getting survey data.",
+                    error = ex.Message // Optional: remove in production
+                });
+            }
+        }
     }
 }

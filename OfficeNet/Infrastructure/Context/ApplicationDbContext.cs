@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OfficeNet.Domain.Contracts;
 using OfficeNet.Domain.Entities;
+using System.Reflection.Emit;
 
 namespace OfficeNet.Infrastructure.Context
 {
@@ -15,6 +17,7 @@ namespace OfficeNet.Infrastructure.Context
         public DbSet<SurveyAuthenticateUser> SurveyAuthenticateUsers { get; set; }
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public DbSet<SurveyOption> SurveyOptions { get; set; }
+        public DbSet<SurveyList> SurveyListData { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +30,7 @@ namespace OfficeNet.Infrastructure.Context
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+            builder.Entity<SurveyList>().HasNoKey().ToView(null);
         }
     }
 }

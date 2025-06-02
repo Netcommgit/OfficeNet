@@ -1,0 +1,16 @@
+﻿namespace OfficeNet.Domain.Contracts
+{
+    public class SurveyList
+    {
+        public long SerilNo { get; set; }
+        public int SurveyId { get; set; }
+        public string SurveyName { get; set; }
+        public DateTime? SurveyStart { get; set; }
+        public DateTime? SurveyEnd { get; set; }
+        public string SurveyInstruction { get; set; }
+        public string SurveyConfirmation { get; set; }
+        public int? Total { get; set; }
+        public int? Respondent { get; set; }
+        public bool? SurveyStatus { get; set; }
+    }
+}

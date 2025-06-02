@@ -7,5 +7,6 @@ namespace OfficeNet.Service.Survey
     {
         Task<SurveyDetails> SaveSurveyDetailsAsync(SurveyDetails surveyDetails, List<string> userList,SurveyQuestion surveyQuestion, List<string> questionType);
         Task<SurveyAuthenticateUser> CreateSurveyAuthenticateUserAsync(SurveyAuthenticateUser surveyAuthenticateUser);
+        Task<List<SurveyList>> GetSurveyListAsync();
     }
 }
