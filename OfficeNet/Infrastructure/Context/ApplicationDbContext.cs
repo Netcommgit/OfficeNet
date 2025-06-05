@@ -18,6 +18,7 @@ namespace OfficeNet.Infrastructure.Context
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public DbSet<SurveyOption> SurveyOptions { get; set; }
         public DbSet<SurveyList> SurveyListData { get; set; }
+        public DbSet<SmtpDetail> SmtpDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -12,7 +12,7 @@ namespace OfficeNet.Domain.Entities
         public DateTime? SurveyEnd { get; set; }
         public string? SurveyInstruction { get; set; }
         public string? SurveyConfirmation {get;set;}
-        public int SurveyView {get;set;}
+        public int? SurveyView {get;set;}
         public int AuthView { get;set;}
         public int? PlantId { get; set; }
         public int? DepartmentId {get;set;}

@@ -50,10 +50,11 @@ namespace OfficeNet.Service.UserService
                 throw new Exception($"Failed to create user:{errors}");
             }
             _logger.LogInformation($"User created sucessfully");
+            await _userManager.AddToRoleAsync(newUser, "User");
             await _tokenService.GenerateToken(newUser); 
             return _mapper.Map<UserResponse>(newUser);
-            await _userManager.AddToRoleAsync(newUser, "User");
-            return null;
+            
+            //return null;
         }
 
         private async Task<string> GenerateEmployeeCodeAsync()
