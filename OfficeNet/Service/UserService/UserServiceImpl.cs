@@ -325,5 +325,21 @@ namespace OfficeNet.Service.UserService
             }
             return userList;
         }
+
+        public async Task<List<UserResponse>> GetUserListByPlantDept(int plantId, int departmentId)
+        {
+            var userList = new List<UserResponse>();
+            var user = await _userManager.Users.Where(u => u.PlantID == plantId && (departmentId == null || departmentId == 0 || u.DepartmentID == departmentId)).ToListAsync();
+            if(user != null)
+            {
+                userList = user.Select(u => new UserResponse
+                {
+                    Id = Guid.Parse(u.Id),
+                    FirstName = u.FirstName,
+                    LastName = u.LastName
+                }).ToList();
+            }
+            return userList;
+        }
     }
 }

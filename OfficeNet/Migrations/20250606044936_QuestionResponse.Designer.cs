@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OfficeNet.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using OfficeNet.Infrastructure.Context;
 namespace OfficeNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606044936_QuestionResponse")]
+    partial class QuestionResponse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,98 +158,10 @@ namespace OfficeNet.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.GetSurveyUserList", b =>
-                {
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Designation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmpCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubmissionDateTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyFlatResult", b =>
-                {
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OptionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OptionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuestionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QuestionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("QuestionType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResponseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResponseText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SurveyInstruction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SurveyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SurveyView")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
             modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyList", b =>
                 {
                     b.Property<bool?>("Archieve")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("NotRespondent")
-                        .HasColumnType("int");
 
                     b.Property<int?>("Respondent")
                         .HasColumnType("int");
@@ -277,61 +192,6 @@ namespace OfficeNet.Migrations
 
                     b.Property<int?>("Total")
                         .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyResult", b =>
-                {
-                    b.Property<int>("AnsweredCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OptionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QuestionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ResponsePercentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TotalAssignedUsers")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.UsersSurveyList", b =>
-                {
-                    b.Property<string>("SubmittedDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SurveyEnd")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SurveyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SurveyStart")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.ToTable((string)null);
 
@@ -880,16 +740,13 @@ namespace OfficeNet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ResId")
+                    b.Property<int>("ResId")
                         .HasColumnType("int");
 
                     b.Property<bool>("ResponseStatus")
@@ -899,7 +756,7 @@ namespace OfficeNet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SurveyId")
+                    b.Property<int?>("SurveyId")
                         .HasColumnType("int");
 
                     b.HasKey("ResponseId");

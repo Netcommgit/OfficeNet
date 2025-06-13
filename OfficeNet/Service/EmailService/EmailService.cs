@@ -1,18 +1,22 @@
 ﻿using OfficeNet.Domain.Contracts;
 using System.Net.Mail;
 using System.Net;
+using OfficeNet.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace OfficeNet.Service.EmailService
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _config;
+        private readonly ApplicationDbContext _context;
         public EmailService(IConfiguration config)
         {
             _config = config;
         }
         public async Task SendEmailAsync(EmailRequest request)
         {
+           var result =  _context.SmtpDetails.FirstOrDefaultAsync(s => s.SmtpId == 1);
             var smtpHost = _config["Email:SmtpHost"];
             var smtpPort = int.Parse(_config["Email:SmtpPort"]);
             var smtpUser = _config["Email:SmtpUser"];

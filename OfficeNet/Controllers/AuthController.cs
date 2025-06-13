@@ -150,5 +150,25 @@ namespace OfficeNet.Controllers
           var User =  await  _roleService.AssingRoleToUserAync(objUser);
           return Ok(User);
         }
+        [HttpGet("GetUserListByPlant")]
+        [Authorize]
+        public async Task<IActionResult> GetUserListByPlant(int plantId, int departmentId)
+        {
+            try
+            {
+                var userList = await _userService.GetUserListByPlantDept(plantId, departmentId);
+                var simplifiedresult = userList.Select(u => new
+                {
+                    u.Id,
+                    u.FirstName,
+                    u.LastName
+                });
+                return Ok(simplifiedresult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

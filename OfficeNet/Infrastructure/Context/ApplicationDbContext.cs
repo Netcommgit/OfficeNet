@@ -19,6 +19,11 @@ namespace OfficeNet.Infrastructure.Context
         public DbSet<SurveyOption> SurveyOptions { get; set; }
         public DbSet<SurveyList> SurveyListData { get; set; }
         public DbSet<SmtpDetail> SmtpDetails { get; set; }
+        public DbSet<SurveyQuestionResponse> SurveyQuestionResponses { get; set; }
+        public DbSet<GetSurveyUserList> GetSurveyUserLists { get; set; }
+        public DbSet<UsersSurveyList> UsersSurveyLists { get; set; }
+        public DbSet<SurveyFlatResult> SurveyFlatResults { get; set; }
+        public DbSet<SurveyResult> SurveyResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +37,10 @@ namespace OfficeNet.Infrastructure.Context
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             builder.Entity<SurveyList>().HasNoKey().ToView(null);
+            builder.Entity<GetSurveyUserList>().HasNoKey().ToView(null);
+            builder.Entity<UsersSurveyList>().HasNoKey().ToView(null);
+            builder.Entity<SurveyFlatResult>().HasNoKey().ToView(null);
+            builder.Entity<SurveyResult>().HasNoKey().ToView(null);
         }
     }
 }

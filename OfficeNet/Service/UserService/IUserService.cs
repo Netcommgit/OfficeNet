@@ -16,5 +16,6 @@ namespace OfficeNet.Service.UserService
         Task<UserResponse> LoginAsync(UserLoginRequest loginRequest);
 
         Task<List<UserResponse>> GetUserListAsync();
+        Task<List<UserResponse>> GetUserListByPlantDept(int plantId, int departmentId);
     }   
 }

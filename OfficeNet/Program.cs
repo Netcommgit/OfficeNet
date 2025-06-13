@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OfficeNet.Domain.Entities;
@@ -95,7 +95,7 @@ builder.Services.AddScoped<ITokenService, TokenServiceImple>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IRoleService, RoleImple>();
 builder.Services.AddScoped<ISurveyDetailsService, SurveyDetailsImple>();
-builder.Services.AddScoped<IPlantsMasterService,PlantMasterService>();
+builder.Services.AddScoped<IPlantsMasterService, PlantMasterService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 //builder.Services.AddScoped<SetUserContextFilter>();
 

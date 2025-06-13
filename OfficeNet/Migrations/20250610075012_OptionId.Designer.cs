@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OfficeNet.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using OfficeNet.Infrastructure.Context;
 namespace OfficeNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250610075012_OptionId")]
+    partial class OptionId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,58 +191,6 @@ namespace OfficeNet.Migrations
                     b.ToView(null, (string)null);
                 });
 
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyFlatResult", b =>
-                {
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OptionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OptionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuestionOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QuestionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("QuestionType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResponseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResponseText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SurveyInstruction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SurveyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SurveyView")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
             modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyList", b =>
                 {
                     b.Property<bool?>("Archieve")
@@ -276,36 +227,6 @@ namespace OfficeNet.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("Total")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
-            modelBuilder.Entity("OfficeNet.Domain.Contracts.SurveyResult", b =>
-                {
-                    b.Property<int>("AnsweredCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OptionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QuestionText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ResponsePercentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TotalAssignedUsers")
                         .HasColumnType("int");
 
                     b.ToTable((string)null);

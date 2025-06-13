@@ -11,9 +11,11 @@
         public string? SurveyConfirmation { get; set; }
         public int? Total { get; set; }
         public int? Respondent { get; set; }
+        public int? NotRespondent { get; set; }
         public bool? SurveyStatus { get; set; }
         public bool? Archieve { get; set; }
 
-
     }
+
+
 }
